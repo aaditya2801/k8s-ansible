@@ -1,0 +1,15 @@
+- hosts: master
+  tasks:
+  - name: creating token for joining
+    shell: "kubeadm token  create --print-join-command"
+    register: join
+
+  - name: debugging
+    debug:
+      var: join.stdout
+
+- hosts: slaves
+  tasks:
+  - name: joining slaves with the master
+    command: "{{ hostvars[item]['join']['stdout'] }}"
+    with_items: "{{ groups['master'] }}"

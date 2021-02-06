@@ -1,0 +1,19 @@
+- hosts: master
+  tasks:
+  - name: installing git
+    package:
+      name: git
+      state: present
+
+  - name: cloning multi-tier architecture
+    command: "git clone https://github.com/aaditya2801/k8s-ansible.git"
+  
+  - name: storing secret file
+    command: "kubectl apply -f  /home/ec2-user/k8s-ansible/multi-tier/secret.yml"
+
+  - name: creating wordpress deployment
+    command: "kubectl create -f /home/ec2-user/k8s-ansible/multi-tier/wordpress.yml"
+
+  - name: creating mysql deployment
+    command: "kubectl create -f /home/ec2-user/k8s-ansible/multi-tier/mysql.yml"
+

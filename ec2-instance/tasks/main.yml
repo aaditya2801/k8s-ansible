@@ -1,0 +1,54 @@
+---
+# tasks file for ec2-instance
+- name: provisioning of master node instance
+  ec2_instance:
+    region: "ap-south-1"
+    image_id: "ami-08e0ca9924195beba"
+    instance_type: "t2.micro"
+    vpc_subnet_id: "subnet-43073d2b"
+    security_group: "sg-3801715a"
+    key_name: "mynewkey"
+    name: "master"
+    state: present
+    aws_access_key: "{{ access_key }}"
+    aws_secret_key: "{{ secret_key }}"
+  register: x
+
+- name: provisioning of first worker node instance
+  ec2_instance:
+    region: "ap-south-1"
+    image_id: "ami-08e0ca9924195beba"
+    instance_type: "t2.micro"
+    vpc_subnet_id: "subnet-43073d2b"
+    security_group: "sg-3801715a"
+    key_name: "mynewkey"
+    name: "slave1"
+    state: present
+    aws_access_key: "{{ access_key }}"
+    aws_secret_key: "{{ secret_key }}"
+  register: y
+
+- name: provisioning of second worker node instance
+  ec2_instance:
+    region: "ap-south-1"
+    image_id: "ami-08e0ca9924195beba"
+    instance_type: "t2.micro"
+    vpc_subnet_id: "subnet-43073d2b"
+    security_group: "sg-3801715a"
+    key_name: "mynewkey"
+    name: "slave2"
+    state: present
+    aws_access_key: "{{ access_key }}"
+    aws_secret_key: "{{ secret_key }}"
+  register: z
+
+- name: updating inventory
+  blockinfile:
+    path: /root/k8s-ansible/hosts
+    block: |
+      [master]
+      {{  x.instances[0].public_ip_address }} ansible_user=ec2-user ansible_ssh_private_key_file=/etc/ansible/mynewkey.pem
+
+      [slaves]
+      {{  y.instances[0].public_ip_address }} ansible_user=ec2-user ansible_ssh_private_key_file=/etc/ansible/mynewkey.pem
+      {{  z.instances[0].public_ip_address }} ansible_user=ec2-user ansible_ssh_private_key_file=/etc/ansible/mynewkey.pem

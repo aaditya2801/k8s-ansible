@@ -1,0 +1,9 @@
+- hosts: master
+  roles:
+  - role: master-node
+
+- hosts: slaves
+  roles:
+  - role: worker-node
+
+

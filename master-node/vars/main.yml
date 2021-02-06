@@ -1,0 +1,4 @@
+---
+# vars file for master-node
+cidr: "10.244.0.0/16"
+sub: "10.244.0.1/24"

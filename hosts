@@ -1,0 +1,9 @@
+
+# BEGIN ANSIBLE MANAGED BLOCK
+[master]
+13.233.39.83 ansible_user=ec2-user ansible_ssh_private_key_file=/etc/ansible/mynewkey.pem
+
+[slaves]
+13.235.50.13 ansible_user=ec2-user ansible_ssh_private_key_file=/etc/ansible/mynewkey.pem
+65.1.85.82 ansible_user=ec2-user ansible_ssh_private_key_file=/etc/ansible/mynewkey.pem
+# END ANSIBLE MANAGED BLOCK
