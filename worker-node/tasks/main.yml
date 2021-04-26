@@ -5,7 +5,7 @@
   yum_repository:
     name: kubernetes
     description: Yum for k8s
-    baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-\$basearch
+    baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7
     enabled: yes
     gpgcheck: yes
     repo_gpgcheck: yes
